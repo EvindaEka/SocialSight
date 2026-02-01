@@ -1,0 +1,10 @@
+# Model besar
+*.safetensors
+*.h5
+*.pt
+*.ckpt
+
+# Cache & env
+__pycache__/
+.env
+.venv
