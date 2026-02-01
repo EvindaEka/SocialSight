@@ -22,6 +22,10 @@ def apply_custom_css():
         background-color: #1E50A0 !important;
     }
 
+    [data-testid="stSidebar"] > :not(div[data-testid="stFileUploader"]) {
+        color: white !important;
+    }
+
     [data-testid="stSidebar"] * {
         color: white !important;
     }
