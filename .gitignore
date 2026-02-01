@@ -1,5 +1,5 @@
 # Model besar
-*.safetensors
+# *.safetensors
 *.h5
 *.pt
 *.ckpt
