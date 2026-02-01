@@ -71,24 +71,15 @@ def load_sentiment_mappings():
 
     return mappings
 
-
 @st.cache_resource
 def load_sentiment_model():
     try:
-        from transformers import (
-            AutoTokenizer,
-            AutoModelForSequenceClassification,
-            pipeline,
-        )
-
-        tokenizer = AutoTokenizer.from_pretrained("./models/sentiment_analysis")
-        model = AutoModelForSequenceClassification.from_pretrained("./models/sentiment_analysis")
+        from transformers import pipeline
 
         return pipeline(
             "sentiment-analysis",
-            model=model,
-            tokenizer=tokenizer,
-            device=-1  # CPU ONLY (penting)
+            model="w11wo/indonesian-roberta-base-sentiment-classifier",
+            device=-1  # CPU (Streamlit Cloud)
         )
 
     except Exception as e:

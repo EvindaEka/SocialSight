@@ -4,6 +4,8 @@
 *.pt
 *.ckpt
 
+models/
+
 # Cache & env
 __pycache__/
 .env
