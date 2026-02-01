@@ -26,10 +26,6 @@ def apply_custom_css():
         color: white !important;
     }
 
-    [data-testid="stSidebar"] * {
-        color: white !important;
-    }
-
     .stButton > button {
         background-color: rgba(255,255,255,0.2) !important;
         border: 1px solid rgba(255,255,255,0.4) !important;
