@@ -5,7 +5,7 @@ import plotly.graph_objects as go
 import re
 import json
 from collections import Counter
-# from transformers import AutoTokenizer, AutoModelForSequenceClassification, pipeline
+from transformers import AutoTokenizer, AutoModelForSequenceClassification, pipeline
 from utils.helpers import split_comments
 
 
@@ -71,28 +71,22 @@ def load_sentiment_mappings():
 
     return mappings
 
-
 @st.cache_resource
 def load_sentiment_model():
+    """Load sentiment analysis model"""
     try:
-        from transformers import (
-            AutoTokenizer,
-            AutoModelForSequenceClassification,
-            pipeline,
+        tokenizer = AutoTokenizer.from_pretrained(
+            "./models/sentiment_analysis"
         )
-
-        tokenizer = AutoTokenizer.from_pretrained("./models/sentiment_analysis")
-        model = AutoModelForSequenceClassification.from_pretrained("./models/sentiment_analysis")
-
-        return pipeline(
-            "sentiment-analysis",
-            model=model,
-            tokenizer=tokenizer,
-            device=-1  # CPU ONLY (penting)
+        model = AutoModelForSequenceClassification.from_pretrained(
+            "./models/sentiment_analysis"
         )
-
+        sentiment_pipeline = pipeline(
+            "sentiment-analysis", model=model, tokenizer=tokenizer
+        )
+        return sentiment_pipeline
     except Exception as e:
-        st.warning(f"Sentiment model not available: {e}")
+        st.warning(f"Sentiment model not available: {str(e)}")
         return None
 
 def normalize_text(text, mappings):
