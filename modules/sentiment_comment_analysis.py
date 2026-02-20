@@ -73,20 +73,25 @@ def load_sentiment_mappings():
 
 @st.cache_resource
 def load_sentiment_model():
-    """Load sentiment analysis model"""
     try:
-        tokenizer = AutoTokenizer.from_pretrained(
-            "./models/sentiment_analysis"
+        from transformers import (
+            AutoTokenizer,
+            AutoModelForSequenceClassification,
+            pipeline,
         )
-        model = AutoModelForSequenceClassification.from_pretrained(
-            "./models/sentiment_analysis"
+
+        tokenizer = AutoTokenizer.from_pretrained("./models/sentiment_analysis")
+        model = AutoModelForSequenceClassification.from_pretrained("./models/sentiment_analysis")
+
+        return pipeline(
+            "sentiment-analysis",
+            model=model,
+            tokenizer=tokenizer,
+            device=-1  # CPU ONLY (penting)
         )
-        sentiment_pipeline = pipeline(
-            "sentiment-analysis", model=model, tokenizer=tokenizer
-        )
-        return sentiment_pipeline
+
     except Exception as e:
-        st.warning(f"Sentiment model not available: {str(e)}")
+        st.warning(f"Sentiment model not available: {e}")
         return None
 
 def normalize_text(text, mappings):
